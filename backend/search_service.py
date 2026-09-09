@@ -29,4 +29,28 @@ scenes = [
     },
 ]
 
-print(scenes)
+
+def filter_scenes_by_platform(scenes: list[dict], platform: str) -> list[dict]:
+    matching_scenes = []
+    for scene in scenes:
+        if scene["platform"] == platform:
+            matching_scenes.append(scene)
+    return matching_scenes
+
+
+def search_scenes(
+    scenes: list[dict], platform: str, beam_mode: str, downloadable: bool
+) -> list[dict]:
+    matching_scenes = []
+    for scene in scenes:
+        if (
+            scene["platform"] == platform
+            and scene["beam_mode"] == beam_mode
+            and scene["downloadable"] == downloadable
+        ):
+            matching_scenes.append(scene)
+    return matching_scenes
+
+
+searched_scenes = search_scenes(scenes, "Sentinel-1", "EW", downloadable=True)
+print(searched_scenes)
