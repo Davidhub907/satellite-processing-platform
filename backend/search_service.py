@@ -1,3 +1,4 @@
+### These are fake placeholder scenes to use while I test functions and stuff
 scenes = [
     {
         "scene_id": "S1A_001",
