@@ -71,11 +71,13 @@ def build_bbox_polygon(
     return coordinates
 
 
-fairbanks_area = build_bbox_polygon(
-    -147.9,
-    64.7,
-    -147.5,
-    65.0,
-)
+def polygon_to_wkt(coordinates: list[tuple[float, float]]) -> str:
 
-print(fairbanks_area)
+    coordinate_strings = []
+
+    for longitude, latitude in coordinates:
+        coordinate_string = f"{longitude} {latitude}"
+        coordinate_strings.append(coordinate_string)
+    joined_coordinates = ", ".join(coordinate_strings)
+    result = f"POLYGON(({joined_coordinates}))"
+    return result
