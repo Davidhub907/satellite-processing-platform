@@ -57,5 +57,25 @@ def search_scenes(
     return matching_scenes
 
 
-searched_scenes = search_scenes(scenes, beam_mode="FBS")
-print(searched_scenes)
+def build_bbox_polygon(
+    min_lon: float, min_lat: float, max_lon: float, max_lat: float
+) -> list[tuple[float, float]]:
+    coordinates = [
+        (min_lon, min_lat),
+        (min_lon, max_lat),
+        (max_lon, max_lat),
+        (max_lon, min_lat),
+        (min_lon, min_lat),
+    ]
+
+    return coordinates
+
+
+fairbanks_area = build_bbox_polygon(
+    -147.9,
+    64.7,
+    -147.5,
+    65.0,
+)
+
+print(fairbanks_area)
