@@ -81,3 +81,44 @@ def polygon_to_wkt(coordinates: list[tuple[float, float]]) -> str:
     joined_coordinates = ", ".join(coordinate_strings)
     result = f"POLYGON(({joined_coordinates}))"
     return result
+
+
+def run_search(
+    scenes: list[dict],
+    min_lon: float,
+    min_lat: float,
+    max_lon: float,
+    max_lat: float,
+    platform: str | None = None,
+    beam_mode: str | None = None,
+    downloadable: bool | None = None,
+) -> dict:
+    coordinates = build_bbox_polygon(min_lon, min_lat, max_lon, max_lat)
+    wkt = polygon_to_wkt(coordinates)
+    results = search_scenes(scenes, platform, beam_mode, downloadable)
+
+    run_search_results = {
+        "search_area": {"coordinates": coordinates, "wkt": wkt},
+        "filters": {
+            "platform": platform,
+            "beam_mode": beam_mode,
+            "downloadable": downloadable,
+        },
+        "result_count": len(results),
+        "scenes": results,
+    }
+
+    return run_search_results
+
+
+result = run_search(
+    scenes,
+    -147.9,
+    64.7,
+    -147.5,
+    65.0,
+    platform="Sentinel-1",
+    beam_mode="IW",
+)
+
+print(result)
